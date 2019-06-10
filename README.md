@@ -14,7 +14,8 @@ https://code.visualstudio.com/download
 
 ## node 설치 (npm 포함)
 
-https://nodejs.org/dist/v12.4.0/node-v12.4.0-x64.msi
+https://nodejs.org/dist/v12.4.0/node-v12.4.0-x64.msi 로 설치
+
 https://d2fault.github.io/2018/04/30/20180430-install-and-upgrade-nodejs-or-npm/ 에서 2번 참
 
 ## yarn 설치 (npm과 유사한 패키지 프로그램)
