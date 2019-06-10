@@ -10,7 +10,7 @@ https://git-scm.com/download/win
 
 ## VScode
 
-https://yarnpkg.com/en/docs/install
+https://code.visualstudio.com/download
 
 ## node 설치 (npm 포함)
 
