@@ -41,3 +41,13 @@ https://yarnpkg.com/en/docs/install
 
 1. npm start 후 localhost:8080/index.html
 2. 새로운 터미널을 열고 npm run scss 하게되면 scss를 저장할 때 마다 자동으로 컴파일 함 (서버중단 은 컨트롤 + C)
+
+# 작업
+1. 새로고침 할 때 마다 배경이 바뀌게
+2. 이름 입력하는 칸 만들어서 'hello 누구누구님 이렇게 나오게'  (새로고침해도 유지 되게)
+3. todo 리스트 만들기 (input에 입력하면 ul로 리스트가 저장되게, 각각 지워지게) (새로고침해도 유지 되게)
+4. 날씨 정보 받아오기 (위치, 지역, 온도 정도 나오게) 
+https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${API_KEY}&units=metric
+
+첨부로 업로드 한 1.png 참고
+
