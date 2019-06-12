@@ -1,41 +1,134 @@
 @import "variables";
+@import "reset";
 @import "font";
 
 * {
-  padding: 0;
-  margin: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 }
-html, body { height: 100%; }
-img { vertical-align: top; border: 0; }
+
+html,
+body {
+  height: 100%;
+}
+
+
+input[type=text] {
+  width: 100%;
+  padding: 0 10px;
+  height: 30px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
 
 body {
   background-color: $myColor;
   font: 16px/1.6 'Noto Sans KR', sans-serif;
+
+
 }
 
-#bg { 
-  position: absolute; 
-  left: 0;
-  top: 0; 
-  width: 100%; 
+@-webkit-keyframes hue {
+  from {
+    -webkit-filter: hue-rotate(0deg);
+    filter: hue-rotate(0deg);
+  }
+
+  to {
+    -webkit-filter: hue-rotate(-360deg);
+    filter: hue-rotate(-360deg);
+  }
+}
+
+@keyframes hue {
+  from {
+    -webkit-filter: hue-rotate(0deg);
+    filter: hue-rotate(0deg);
+  }
+
+  to {
+    -webkit-filter: hue-rotate(-360deg);
+    filter: hue-rotate(-360deg);
+  }
+}
+
+.body_wrap {
+  padding: 10px;
   height: 100%;
-  background-size: cover; 
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+#bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
   z-index: -1;
-  img { width: 100%; height: 100vh; -o-object-fit: cover; object-fit: cover; opacity: 0; -webkit-transition: opacity 1s; transition: opacity 1s;}
-  img.complete { opacity: 1; }
-  
+
+  img {
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    opacity: 0;
+    -webkit-transition: opacity 1s;
+    transition: opacity 1s;
+  }
+
+  img.complete {
+    opacity: 1;
+  }
+
 }
 
 #greeting {
   text-align: center;
+  margin-bottom: 30px;
 
-  h1, input, button { display: none; }
+  h1 {
+    font-size: 5vw;
+  }
+
+  h1,
+  input,
+  button {
+    display: none;
+  }
 
   &.apply {
-    h1  { display: block; }
-    input { display: none; }
-    button { display: inline-block; }
+    h1 {
+      display: block;
+      background-image: linear-gradient(92deg, #f35626 0%, #feab3a 100%);
+      -webkit-text-fill-color: transparent;
+      -webkit-background-clip: text;
+      -webkit-animation: hue 2s infinite;
+      animation: hue 2s infinite;
+      text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    input {
+      display: none;
+    }
+
+    button {
+      display: inline-block;
+    }
   }
 }

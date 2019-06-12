@@ -1,3 +1,143 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+blockquote,
+q {
+  quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+}
+
+img {
+  vertical-align: top;
+}
+
 @font-face {
   font-family: 'Noto Sans KR';
   font-style: normal;
@@ -47,22 +187,65 @@
 }
 
 * {
-  padding: 0;
-  margin: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
-img {
-  vertical-align: top;
-  border: 0;
+input[type=text] {
+  width: 100%;
+  padding: 0 10px;
+  height: 30px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
   background-color: #f7f7f7;
   font: 16px/1.6 'Noto Sans KR', sans-serif;
+}
+
+@-webkit-keyframes hue {
+  from {
+    -webkit-filter: hue-rotate(0deg);
+    filter: hue-rotate(0deg);
+  }
+  to {
+    -webkit-filter: hue-rotate(-360deg);
+    filter: hue-rotate(-360deg);
+  }
+}
+
+@keyframes hue {
+  from {
+    -webkit-filter: hue-rotate(0deg);
+    filter: hue-rotate(0deg);
+  }
+  to {
+    -webkit-filter: hue-rotate(-360deg);
+    filter: hue-rotate(-360deg);
+  }
+}
+
+.body_wrap {
+  padding: 10px;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 #bg {
@@ -74,12 +257,14 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
   z-index: -1;
 }
 
 #bg img {
   width: 100%;
-  height: 100vh;
+  height: 100%;
   -o-object-fit: cover;
   object-fit: cover;
   opacity: 0;
@@ -93,14 +278,27 @@ body {
 
 #greeting {
   text-align: center;
+  margin-bottom: 30px;
 }
 
-#greeting h1, #greeting input, #greeting button {
+#greeting h1 {
+  font-size: 5vw;
+}
+
+#greeting h1,
+#greeting input,
+#greeting button {
   display: none;
 }
 
 #greeting.apply h1 {
   display: block;
+  background-image: linear-gradient(92deg, #f35626 0%, #feab3a 100%);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-animation: hue 2s infinite;
+  animation: hue 2s infinite;
+  text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
 }
 
 #greeting.apply input {

@@ -4,18 +4,26 @@
   <head>
     <title>jQuery로 만들기</title>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,initial-scale=1,user-scalable=no">
     <link rel="stylesheet" type="text/css" href="/asset/css/style.css" rel="preload" as="style">
     <script src="/asset/js/jquery-3.4.1.min.js"></script>
     <script src="/asset/js/jquery/common.js"></script>
   </head>
 
   <body>
-    <div id="bg"></div>
-    <div id="greeting">
-      <h1 id="greeting_message">안녕하세요, <strong>누구누구</strong>님!</h1>
-      <div>
-        <input type="text" id="greeting_text" placeholder="이름을 입력하세요.">
-        <button type="button">이름 초기화</button>
+    <div class="body_wrap">
+      <div id="bg"></div>
+      <div id="greeting">
+        <h1 id="greeting_message">안녕하세요, <strong>누구누구</strong>님!</h1>
+        <div>
+          <input type="text" id="greeting_text" placeholder="이름을 입력하세요.">
+          <button type="button">이름 초기화</button>
+        </div>
+      </div>
+
+      <div class="todo">
+        <ul></ul>
+        <input type="text" placeholder="할 일을 적어주세요.">
       </div>
     </div>
   </body>
