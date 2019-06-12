@@ -19,11 +19,20 @@ input[type=text] {
   height: 30px;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
+  border-radius: 0;
+  -webkit-border-radius: 0;
+  border: 1px solid #ddd;
+  -webkit-box-shadow: none;
+  box-shadow: none;
 }
+
+
 
 body {
   background-color: $myColor;
   font: 16px/1.6 'Noto Sans KR', sans-serif;
+  word-break: keep-all;
+  word-wrap: break-word;
 
 
 }
@@ -104,6 +113,7 @@ body {
 
   h1 {
     font-size: 5vw;
+    font-weight: 700;
   }
 
   h1,
@@ -114,8 +124,9 @@ body {
 
   &.apply {
     h1 {
-      display: block;
-      background-image: linear-gradient(92deg, #f35626 0%, #feab3a 100%);
+      display: inline-block;
+      background: -webkit-gradient(linear, left top, right top, from(#ff0000), color-stop(17%, #ff9500), color-stop(34%, #ffff00), color-stop(51%, #00ff00), color-stop(67%, #0000ff), color-stop(84%, #00177f), to(#ad20e5));
+      background: linear-gradient(to right, #ff0000 0%, #ff9500 17%, #ffff00 34%, #00ff00 51%, #0000ff 67%, #00177f 84%, #ad20e5 100%);
       -webkit-text-fill-color: transparent;
       -webkit-background-clip: text;
       -webkit-animation: hue 2s infinite;
@@ -130,5 +141,75 @@ body {
     button {
       display: inline-block;
     }
+  }
+}
+
+.todoList {
+  >div {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+
+    ul {
+      -webkit-box-flex: 1;
+      -ms-flex: 1;
+      flex: 1;
+      margin-bottom: 20px;
+      padding: 10px;
+      background: rgba(0, 0, 0, .25);
+      border-radius: 5px;
+      color: #fff;
+
+      &:before {
+        text-align: center;
+        font-weight: 700;
+        display: block;
+        margin-bottom: 20px;
+      }
+
+      &#todo:before {
+        content: '해야 할 일';
+      }
+
+      &#todoComplete {
+        >li {
+          text-decoration: line-through;
+          -webkit-text-decoration-color: #000;
+          text-decoration-color: #000;
+        }
+
+        &:before {
+          content: '완료 한 일';
+        }
+
+      }
+
+      >li {
+        span {}
+
+        button {
+          border: none;
+          background: none;
+          padding: 4px 5px;
+          vertical-align: 1px;
+
+          &:active {
+            -webkit-filter: invert(100%);
+            filter: invert(100%);
+          }
+        }
+      }
+
+
+
+
+      &:empty {
+        display: none;
+      }
+    }
+
   }
 }
