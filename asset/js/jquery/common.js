@@ -1,5 +1,7 @@
 $(function () {
 
+    let TODO_ARRAY = [];
+
     /* 배경 */
     function setBackground() {
         const IMGCOUNT = 7;
@@ -59,22 +61,35 @@ $(function () {
     function setTodo(event) {
         const TODO_ITEM = $(this).val();
         const TODO_LENGTH = $('#todo > li').length;
-        const TODO_ARRAY = [];
         const TODO_JSON = {
-            id: `todo_${TODO_LENGTH + 1}`,
-            title: TODO_ITEM
+                id: `todo_${TODO_LENGTH + 1}`,
+                title: TODO_ITEM
+            
         };
         if (event.which === 13) {
             if (TODO_ITEM != null) {
+                
+                console.log(typeof(TODO_JSON));
+                
+                $('#todo').append(`<li id="${TODO_JSON.id}">${TODO_JSON.title}`);
                 TODO_ARRAY.push(TODO_JSON);
-                console.log(JSON.stringify(TODO_JSON))
-                saveLocalStorage('todo', TODO_JSON);
-
-                $('#todo').append(`<li>${TODO_JSON.title}`);
+                saveLocalStorage('todo', JSON.stringify(TODO_ARRAY));
                 $(this).val('');
             } else {
                 alert('할 일을 입력해 주세요.')
             }
+            //getTodo();
+        }
+        
+    }
+
+    function getTodo(){
+        const TODOLIST_ITEMS = JSON.parse(localStorage.getItem('todo'));
+        console.log(TODOLIST_ITEMS);
+        if ( TODOLIST_ITEMS != null) {
+            for ( i=0; i < TODOLIST_ITEMS.length; i++){
+                $('#todo').append(`<li id="${TODOLIST_ITEMS[i].id}">${TODOLIST_ITEMS[i].title}`);
+            } 
         }
     }
 
@@ -103,6 +118,7 @@ $(function () {
         $('#greeting_text').on('keydown', setGreeting);
         $('#greeting > div > button').on('click', removeGreeting);
 
+        getTodo();
         $('#todo_text').on('keydown', setTodo);
     }
     init();
