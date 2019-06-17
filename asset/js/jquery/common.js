@@ -33,7 +33,7 @@ $(function () {
 
     function removeGreeting() {
         alert('이름을 초기화 합니다.');
-        delLocalStorge('name');
+        delLocalStorage('name');
         $('#greeting').removeClass('apply');
         getGreeting();
     }
@@ -69,7 +69,7 @@ $(function () {
         if (event.which === 13) {
             if (TODO_ITEM != null) {
                 
-                console.log(typeof(TODO_JSON));
+                //console.log(typeof(TODO_JSON));
                 
                 $('#todo').append(`<li id="${TODO_JSON.id}">${TODO_JSON.title}`);
                 TODO_ARRAY.push(TODO_JSON);
@@ -79,19 +79,34 @@ $(function () {
                 alert('할 일을 입력해 주세요.')
             }
             //getTodo();
-        }
-        
+        }   
     }
 
     function getTodo(){
         const TODOLIST_ITEMS = JSON.parse(localStorage.getItem('todo'));
-        console.log(TODOLIST_ITEMS);
+        //console.log(TODOLIST_ITEMS);
         if ( TODOLIST_ITEMS != null) {
+            //alert('dd')
             for ( i=0; i < TODOLIST_ITEMS.length; i++){
-                $('#todo').append(`<li id="${TODOLIST_ITEMS[i].id}">${TODOLIST_ITEMS[i].title}`);
+                $('#todo').append(`<li id="${TODOLIST_ITEMS[i].id}">${TODOLIST_ITEMS[i].title} <button type="button">✂️</button></li>`);
             } 
         }
     }
+
+    function delTodo() {
+        const TODOLIST_ITEMS = JSON.parse(localStorage.getItem('todo'));
+        const LIST_ARRAY = $('#todo > li'); 
+        
+
+        //console.log(TODOLIST_ITEMS);
+        
+        $(this).parent().remove();
+        const processTodo = LIST_ARRAY.filter(calcTodo => TODOLIST_ITEMS.id != LIST_ARRAY.attr('id'));
+        console.log(LIST_ARRAY.get());
+        
+        
+    }
+
 
 
 
@@ -100,7 +115,7 @@ $(function () {
         localStorage.setItem(key, value);
     }
 
-    function delLocalStorge(key, value) {
+    function delLocalStorage(key, value) {
         if (key && value == null) {
             localStorage.removeItem(key);
         } else if (key && value != null) {
@@ -119,6 +134,8 @@ $(function () {
         $('#greeting > div > button').on('click', removeGreeting);
 
         getTodo();
+        $(document).on('click', '#todo > li > button', delTodo);
+
         $('#todo_text').on('keydown', setTodo);
     }
     init();

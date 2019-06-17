@@ -129,8 +129,8 @@ body {
       background: linear-gradient(to right, #ff0000 0%, #ff9500 17%, #ffff00 34%, #00ff00 51%, #0000ff 67%, #00177f 84%, #ad20e5 100%);
       -webkit-text-fill-color: transparent;
       -webkit-background-clip: text;
-      -webkit-animation: hue 2s infinite;
-      animation: hue 2s infinite;
+      -webkit-animation: hue 2s infinite linear;
+      animation: hue 2s infinite linear;
       text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
     }
 
