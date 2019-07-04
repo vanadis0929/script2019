@@ -1,6 +1,8 @@
 $(function () {
   let TODO_ARRAY = [];
+  let WEATHER_ARRAY = [];
   const TODOLIST_ITEMS = JSON.parse(localStorage.getItem('todo'));
+  const WEATHER_API_KEY = '3f9404e51a676528522e910eefbc4158';
 
   /* 배경 */
   function setBackground() {
@@ -150,8 +152,66 @@ $(function () {
     }
   }
 
+  /* 날씨 관련 */
+
+  function getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(getCoords, showError);
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
+  }
+
+  function getCoords(position) {
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
+
+    //console.log(`Latitude: ${lat} \n Longitude: + ${long}`);
+
+    WEATHER_ARRAY = {
+      latitude: latitude,
+      longitude: longitude
+    }
+    if (WEATHER_ARRAY != null) {
+      saveLocalStorage('weather', JSON.stringify(WEATHER_ARRAY));
+      getWeather(latitude, longitude);
+    }
+  }
 
 
+  function showError(error) {
+    switch (error.code) {
+      case error.PERMISSION_DENIED:
+        x.innerHTML = "User denied the request for Geolocation."
+        break;
+      case error.POSITION_UNAVAILABLE:
+        x.innerHTML = "Location information is unavailable."
+        break;
+      case error.TIMEOUT:
+        x.innerHTML = "The request to get user location timed out."
+        break;
+      case error.UNKNOWN_ERROR:
+        x.innerHTML = "An unknown error occurred."
+        break;
+    }
+  }
+
+  function getWeather(lat, long) {
+    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${WEATHER_API_KEY}&units=metric`).then(function (response) {
+      return response.json();
+    }).then(function (json) {
+      console.log(json);
+      const temp = json.main.temp;
+      const place = json.name;
+      const humidity = json.main.humidity;
+      const weatherStatus = json.weather[0].main;
+      $('#weather').text(`기온: ${temp}C° / 지역: ${place} / 날씨 = ${weatherStatus} / 습도: ${humidity}%`);
+
+    });
+
+
+
+  };
   /* 로컬스토리지 */
   function saveLocalStorage(key, value) {
     localStorage.setItem(key, value);
@@ -181,6 +241,9 @@ $(function () {
     }
     $(document).on('click', '#todo > li > button, #reset_todo', delTodo);
     $('#todo_text').on('keydown', setTodo);
+
+
+    getLocation();
   }
   init();
 });
