@@ -12,6 +12,32 @@ $(function () {
     }, 200);
   }
 
+
+  /* 초기화 버튼*/
+  function checkReset(event) {
+    const isName = localStorage.getItem('name');
+    const isTodo = localStorage.getItem('todo');
+    const target = $(this);
+
+    if (event !== undefined && event.type === 'click') {
+      alert(`${target.text()}를 진행합니다.`);
+      const delTarget = target.attr('id').split('reset_');
+      //console.log(delTarget[1])
+      delLocalStorage(delTarget[1]);
+
+      if (delTarget[1] == 'name') {
+        getGreeting();
+      } else if (delTarget[1] == 'todo') {
+        delTodo();
+      }
+
+
+    }
+
+  }
+
+
+
   /* 인사메시지 */
   function setGreeting(event) {
     if (event.which === 13) {
@@ -29,13 +55,6 @@ $(function () {
     }
   }
 
-  function removeGreeting() {
-    alert('이름을 초기화 합니다.');
-    delLocalStorage('name');
-    $('#greeting').removeClass('apply');
-    getGreeting();
-  }
-
   function getGreeting() {
     const NAME = localStorage.getItem('name');
     if (NAME != null) {
@@ -46,7 +65,10 @@ $(function () {
       $('#greeting_text')
         .hide()
         .val('');
+      $('#reset_name').show();
     } else {
+      $('#greeting').removeClass('apply');
+      $('#reset_name').hide();
       $('#greeting_text')
         .show()
         .val('')
@@ -73,6 +95,7 @@ $(function () {
         TODO_ARRAY.push(TODO_JSON);
         //console.log(TODO_ARRAY);
         saveTodo();
+        TODO_ARRAY.length > 0 ? $('#reset_todo').show() : $('#reset_todo').hide();
         $(this).val('');
       } else {
         alert('할 일을 입력해 주세요.');
@@ -95,20 +118,36 @@ $(function () {
           } <button type="button">✂️</button></li>`
         );
       }
+      $('#todo > li').length > 0 ? $('#reset_todo').show() : $('#reset_todo').hide();
     }
   }
 
   function delTodo() {
-    $(this).parent().removeAttr('id').hide();
-
     const LIST_ARRAY = $('#todo > li');
-    const processTodo = $.grep(TODOLIST_ITEMS, function (result, i) {
-      return (LIST_ARRAY.eq(i).attr('id') !== TODOLIST_ITEMS[i].id);
-    }, true);
 
-    TODO_ARRAY = processTodo;
-    //console.log(TODO_ARRAY);
-    saveTodo();
+    function allRemoveTodo() {
+      LIST_ARRAY.parent().empty();
+      delLocalStorage('todo');
+      $('#reset_todo').hide();
+    };
+
+    if ($(this).is('#reset_todo')) {
+      allRemoveTodo()
+    } else {
+      $(this).parent().removeAttr('id').hide();
+
+      const processTodo = $.grep(TODOLIST_ITEMS, function (result, i) {
+        return (LIST_ARRAY.eq(i).attr('id') !== TODOLIST_ITEMS[i].id);
+      }, true);
+
+      TODO_ARRAY = processTodo;
+      //console.log(TODO_ARRAY);
+      if (TODO_ARRAY.length <= 0) {
+        allRemoveTodo();
+      }
+      saveTodo();
+      checkReset();
+    }
   }
 
 
@@ -130,17 +169,17 @@ $(function () {
 
   function init() {
     setBackground();
+    checkReset();
+    $('.btn_reset').on('click', checkReset);
 
     getGreeting();
     $('#greeting_text').on('keydown', setGreeting);
-    $('#greeting > div > button').on('click', removeGreeting);
+
 
     if (TODOLIST_ITEMS != null) {
       getTodo();
     }
-
-    $(document).on('click', '#todo > li > button', delTodo);
-
+    $(document).on('click', '#todo > li > button, #reset_todo', delTodo);
     $('#todo_text').on('keydown', setTodo);
   }
   init();

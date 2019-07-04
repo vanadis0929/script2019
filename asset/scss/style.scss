@@ -107,7 +107,18 @@ body {
 
 }
 
+.reset_area {
+  text-align: center;
+  margin: 0;
+
+  >* {
+    display: none;
+  }
+}
+
+
 #greeting {
+  margin-top: 20px;
   text-align: center;
   margin-bottom: 30px;
 
@@ -117,8 +128,7 @@ body {
   }
 
   h1,
-  input,
-  button {
+  input {
     display: none;
   }
 
@@ -138,9 +148,7 @@ body {
       display: none;
     }
 
-    button {
-      display: inline-block;
-    }
+
   }
 }
 

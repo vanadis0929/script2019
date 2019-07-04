@@ -284,7 +284,17 @@ body {
   opacity: 1;
 }
 
+.reset_area {
+  text-align: center;
+  margin: 0;
+}
+
+.reset_area > * {
+  display: none;
+}
+
 #greeting {
+  margin-top: 20px;
   text-align: center;
   margin-bottom: 30px;
 }
@@ -295,8 +305,7 @@ body {
 }
 
 #greeting h1,
-#greeting input,
-#greeting button {
+#greeting input {
   display: none;
 }
 
@@ -313,10 +322,6 @@ body {
 
 #greeting.apply input {
   display: none;
-}
-
-#greeting.apply button {
-  display: inline-block;
 }
 
 .todoList > div {
