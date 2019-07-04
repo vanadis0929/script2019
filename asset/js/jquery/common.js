@@ -64,7 +64,6 @@ $(function () {
     };
     if (event.which === 13) {
       if (TODO_ITEM != null) {
-        //console.log(typeof(TODO_JSON));
 
         $('#todo').append(
           `<li id="${TODO_JSON.id}">${
@@ -72,14 +71,17 @@ $(function () {
           } <button type="button">✂️</button></li>`
         );
         TODO_ARRAY.push(TODO_JSON);
-        console.log(TODO_ARRAY);
-        saveLocalStorage('todo', JSON.stringify(TODO_ARRAY));
+        //console.log(TODO_ARRAY);
+        saveTodo();
         $(this).val('');
       } else {
         alert('할 일을 입력해 주세요.');
       }
-      //getTodo();
     }
+  }
+
+  function saveTodo() {
+    saveLocalStorage('todo', JSON.stringify(TODO_ARRAY));
   }
 
   function getTodo() {
@@ -97,30 +99,19 @@ $(function () {
   }
 
   function delTodo() {
-    $(this).parent().remove();
+    $(this).parent().removeAttr('id').hide();
 
     const LIST_ARRAY = $('#todo > li');
-    //console.log(LIST_ARRAY.get());
-    // console.log(
-    //   $('#todo > li')
-    //     .eq(0)
-    //     .attr('id')
-    // );
-    // console.log(
-    //   TODOLIST_ITEMS[0].id !=
-    //     $('#todo > li')
-    //       .eq(0)
-    //       .attr('id')
-    // );
-    //console.log(LIST_ARRAY.get());
     const processTodo = $.grep(TODOLIST_ITEMS, function (result, i) {
-      return console.log(LIST_ARRAY.eq(i).index());
-      //return (LIST_ARRAY.eq(i).attr('id') === TODOLIST_ITEMS[i].id);
+      return (LIST_ARRAY.eq(i).attr('id') !== TODOLIST_ITEMS[i].id);
     }, true);
+
     TODO_ARRAY = processTodo;
-    console.log(TODO_ARRAY);
-    //saveLocalStorage('todo', JSON.stringify(TODO_ARRAY));
+    //console.log(TODO_ARRAY);
+    saveTodo();
   }
+
+
 
   /* 로컬스토리지 */
   function saveLocalStorage(key, value) {
