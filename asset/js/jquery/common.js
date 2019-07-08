@@ -1,4 +1,4 @@
-$(function () {
+$(function() {
   let TODO_ARRAY = [];
   let WEATHER_ARRAY = [];
   const TODOLIST_ITEMS = JSON.parse(localStorage.getItem('todo'));
@@ -14,11 +14,11 @@ $(function () {
     }, 200);
   }
 
-
   /* 초기화 버튼*/
   function checkReset(event) {
     const isName = localStorage.getItem('name');
     const isTodo = localStorage.getItem('todo');
+    const isWeather = localStorage.getItem('weather');
     const target = $(this);
 
     if (event !== undefined && event.type === 'click') {
@@ -31,14 +31,11 @@ $(function () {
         getGreeting();
       } else if (delTarget[1] == 'todo') {
         delTodo();
+      } else if (delTarget[1] == 'weather') {
+        delWeather();
       }
-
-
     }
-
   }
-
-
 
   /* 인사메시지 */
   function setGreeting(event) {
@@ -88,7 +85,6 @@ $(function () {
     };
     if (event.which === 13) {
       if (TODO_ITEM != null) {
-
         $('#todo').append(
           `<li id="${TODO_JSON.id}">${
             TODO_JSON.title
@@ -97,7 +93,9 @@ $(function () {
         TODO_ARRAY.push(TODO_JSON);
         //console.log(TODO_ARRAY);
         saveTodo();
-        TODO_ARRAY.length > 0 ? $('#reset_todo').show() : $('#reset_todo').hide();
+        TODO_ARRAY.length > 0
+          ? $('#reset_todo').show()
+          : $('#reset_todo').hide();
         $(this).val('');
       } else {
         alert('할 일을 입력해 주세요.');
@@ -120,36 +118,47 @@ $(function () {
           } <button type="button">✂️</button></li>`
         );
       }
-      $('#todo > li').length > 0 ? $('#reset_todo').show() : $('#reset_todo').hide();
+      $('#todo > li').length > 0
+        ? $('#reset_todo').show()
+        : $('#reset_todo').hide();
     }
   }
 
   function delTodo() {
     const LIST_ARRAY = $('#todo > li');
 
-    function allRemoveTodo() {
-      LIST_ARRAY.parent().empty();
-      delLocalStorage('todo');
-      $('#reset_todo').hide();
-    };
-
     if ($(this).is('#reset_todo')) {
-      allRemoveTodo()
+      allRemoveTodo();
     } else {
-      $(this).parent().removeAttr('id').hide();
+      $(this)
+        .parent()
+        .removeAttr('id')
+        .hide();
 
-      const processTodo = $.grep(TODOLIST_ITEMS, function (result, i) {
-        return (LIST_ARRAY.eq(i).attr('id') !== TODOLIST_ITEMS[i].id);
-      }, true);
+      const processTodo = $.grep(
+        TODOLIST_ITEMS,
+        function(result, i) {
+          return LIST_ARRAY.eq(i).attr('id') !== TODOLIST_ITEMS[i].id;
+        },
+        true
+      );
 
       TODO_ARRAY = processTodo;
-      //console.log(TODO_ARRAY);
-      if (TODO_ARRAY.length <= 0) {
+      console.log(TODO_ARRAY.length);
+      if (TODO_ARRAY.length == 0) {
         allRemoveTodo();
       }
       saveTodo();
       checkReset();
     }
+  }
+
+  function allRemoveTodo() {
+    $('#todo > li')
+      .parent()
+      .empty();
+    $('#reset_todo').hide();
+    delLocalStorage('todo');
   }
 
   /* 날씨 관련 */
@@ -158,7 +167,7 @@ $(function () {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(getCoords, showError);
     } else {
-      alert("Geolocation is not supported by this browser.");
+      alert('Geolocation is not supported by this browser.');
     }
   }
 
@@ -171,47 +180,57 @@ $(function () {
     WEATHER_ARRAY = {
       latitude: latitude,
       longitude: longitude
-    }
-    if (WEATHER_ARRAY != null) {
-      saveLocalStorage('weather', JSON.stringify(WEATHER_ARRAY));
-      getWeather(latitude, longitude);
-    }
-  }
+    };
 
+    if (localStorage.getItem('weather') == null) {
+      saveLocalStorage('weather', JSON.stringify(WEATHER_ARRAY));
+    }
+    getWeather(latitude, longitude);
+  }
 
   function showError(error) {
     switch (error.code) {
       case error.PERMISSION_DENIED:
-        x.innerHTML = "User denied the request for Geolocation."
+        alert('User denied the request for Geolocation.');
         break;
       case error.POSITION_UNAVAILABLE:
-        x.innerHTML = "Location information is unavailable."
+        alert('Location information is unavailable.');
         break;
       case error.TIMEOUT:
-        x.innerHTML = "The request to get user location timed out."
+        alert('The request to get user location timed out.');
         break;
       case error.UNKNOWN_ERROR:
-        x.innerHTML = "An unknown error occurred."
+        alert('An unknown error occurred.');
         break;
     }
   }
 
   function getWeather(lat, long) {
-    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${WEATHER_API_KEY}&units=metric`).then(function (response) {
-      return response.json();
-    }).then(function (json) {
-      console.log(json);
-      const temp = json.main.temp;
-      const place = json.name;
-      const humidity = json.main.humidity;
-      const weatherStatus = json.weather[0].main;
-      $('#weather').text(`기온: ${temp}C° / 지역: ${place} / 날씨 = ${weatherStatus} / 습도: ${humidity}%`);
+    fetch(
+      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${WEATHER_API_KEY}&units=metric`
+    )
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(json) {
+        console.log(json);
+        const temp = json.main.temp;
+        const place = json.name;
+        const humidity = json.main.humidity;
+        const weatherStatus = json.weather[0].main;
+        $('#weather').text(
+          `기온: ${temp}C° / 지역: ${place} / 날씨 = ${weatherStatus} / 습도: ${humidity}%`
+        );
+        $('#reset_weather').show();
+      });
+  }
 
-    });
+  function delWeather() {
+    delLocalStorage('weather');
+    $('#weather').empty();
+    $('#reset_weather').hide();
+  }
 
-
-
-  };
   /* 로컬스토리지 */
   function saveLocalStorage(key, value) {
     localStorage.setItem(key, value);
@@ -235,13 +254,11 @@ $(function () {
     getGreeting();
     $('#greeting_text').on('keydown', setGreeting);
 
-
     if (TODOLIST_ITEMS != null) {
       getTodo();
     }
     $(document).on('click', '#todo > li > button, #reset_todo', delTodo);
     $('#todo_text').on('keydown', setTodo);
-
 
     getLocation();
   }
