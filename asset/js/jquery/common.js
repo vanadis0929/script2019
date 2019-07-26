@@ -1,37 +1,37 @@
 $(function() {
   let TODO_ARRAY = [];
   let WEATHER_ARRAY = [];
-  const TODOLIST_ITEMS = JSON.parse(localStorage.getItem('todo'));
-  const WEATHER_API_KEY = '3f9404e51a676528522e910eefbc4158';
+  const TODOLIST_ITEMS = JSON.parse(localStorage.getItem("todo_J"));
+  const WEATHER_API_KEY = "3f9404e51a676528522e910eefbc4158";
 
   /* 배경 */
   function setBackground() {
     const IMGCOUNT = 7;
     const imgRdm = Math.floor(Math.random() * IMGCOUNT) + 1;
-    $('#bg').html(`<img src='/asset/images/${imgRdm}.jpg' alt='' />`);
+    $("#bg").html(`<img src='/asset/images/${imgRdm}.jpg' alt='' />`);
     setTimeout(() => {
-      $('#bg > img').addClass('complete');
+      $("#bg > img").addClass("complete");
     }, 200);
   }
 
   /* 초기화 버튼*/
   function checkReset(event) {
-    const isName = localStorage.getItem('name');
-    const isTodo = localStorage.getItem('todo');
-    const isWeather = localStorage.getItem('weather');
+    const isName = localStorage.getItem("name_J");
+    const isTodo = localStorage.getItem("todo_J");
+    const isWeather = localStorage.getItem("weather_J");
     const target = $(this);
 
-    if (event !== undefined && event.type === 'click') {
+    if (event !== undefined && event.type === "click") {
       alert(`${target.text()}를 진행합니다.`);
-      const delTarget = target.attr('id').split('reset_');
-      //console.log(delTarget[1])
-      delLocalStorage(delTarget[1]);
+      const delTarget = target.attr("id").split("reset_");
+      //console.log(delTarget[1]);
+      delLocalStorage(`${delTarget[1]}_J`);
 
-      if (delTarget[1] == 'name') {
-        getGreeting();
-      } else if (delTarget[1] == 'todo') {
+      if (delTarget[1] == "name_J") {
+        delGreeting();
+      } else if (delTarget[1] == "todo_J") {
         delTodo();
-      } else if (delTarget[1] == 'weather') {
+      } else if (delTarget[1] == "weather_J") {
         delWeather();
       }
     }
@@ -44,48 +44,54 @@ $(function() {
       if (msg.length > 0) {
         $(this)
           .prev()
-          .children('strong')
+          .children("strong")
           .text(msg);
-        saveLocalStorage('name', msg);
+        saveLocalStorage("name_J", msg);
         getGreeting();
       } else {
-        alert('이름을 입력해주세요.');
+        alert("이름을 입력해주세요.");
       }
     }
   }
 
   function getGreeting() {
-    const NAME = localStorage.getItem('name');
+    const NAME = localStorage.getItem("name_J");
     if (NAME != null) {
-      $('#greeting')
-        .addClass('apply')
-        .find('h1 > strong')
+      $("#greeting")
+        .addClass("apply")
+        .find("h1 > strong")
         .text(NAME);
-      $('#greeting_text')
+      $("#greeting_text")
         .hide()
-        .val('');
-      $('#reset_name').show();
+        .val("");
+      $("#reset_name").show();
     } else {
-      $('#greeting').removeClass('apply');
-      $('#reset_name').hide();
-      $('#greeting_text')
+      $("#greeting").removeClass("apply");
+      $("#reset_name").hide();
+      $("#greeting_text")
         .show()
-        .val('')
+        .val("")
         .focus();
     }
+  }
+
+  function delGreeting() {
+    alert("dd");
+    delLocalStorage("name_J");
+    $("#greeting").removeClass("apply");
   }
 
   /* todo 리스트 */
   function setTodo(event) {
     const TODO_ITEM = $(this).val();
-    const TODO_LENGTH = $('#todo > li').length;
+    const TODO_LENGTH = $("#todo > li").length;
     const TODO_JSON = {
       id: `todo_${TODO_LENGTH}`,
       title: TODO_ITEM
     };
     if (event.which === 13) {
       if (TODO_ITEM != null) {
-        $('#todo').append(
+        $("#todo").append(
           `<li id="${TODO_JSON.id}">${
             TODO_JSON.title
           } <button type="button">✂️</button></li>`
@@ -94,17 +100,17 @@ $(function() {
         //console.log(TODO_ARRAY);
         saveTodo();
         TODO_ARRAY.length > 0
-          ? $('#reset_todo').show()
-          : $('#reset_todo').hide();
-        $(this).val('');
+          ? $("#reset_todo").show()
+          : $("#reset_todo").hide();
+        $(this).val("");
       } else {
-        alert('할 일을 입력해 주세요.');
+        alert("할 일을 입력해 주세요.");
       }
     }
   }
 
   function saveTodo() {
-    saveLocalStorage('todo', JSON.stringify(TODO_ARRAY));
+    saveLocalStorage("todo_J", JSON.stringify(TODO_ARRAY));
   }
 
   function getTodo() {
@@ -112,33 +118,33 @@ $(function() {
       /* 리스트를  담고 새로고침하면 기존 데이터를 다 날리고 새로 push하는 이슈방지(기존에 있던 리스트를 다시 배열에 집어넣는다)*/
       TODO_ARRAY = TODOLIST_ITEMS;
       for (i = 0; i < TODOLIST_ITEMS.length; i++) {
-        $('#todo').append(
+        $("#todo").append(
           `<li id="${TODOLIST_ITEMS[i].id}">${
             TODOLIST_ITEMS[i].title
           } <button type="button">✂️</button></li>`
         );
       }
-      $('#todo > li').length > 0
-        ? $('#reset_todo').show()
-        : $('#reset_todo').hide();
+      $("#todo > li").length > 0
+        ? $("#reset_todo").show()
+        : $("#reset_todo").hide();
     }
   }
 
   function delTodo() {
-    const LIST_ARRAY = $('#todo > li');
+    const LIST_ARRAY = $("#todo > li");
 
-    if ($(this).is('#reset_todo')) {
+    if ($(this).is("#reset_todo")) {
       allRemoveTodo();
     } else {
       $(this)
         .parent()
-        .removeAttr('id')
+        .removeAttr("id")
         .hide();
 
       const processTodo = $.grep(
         TODOLIST_ITEMS,
         function(result, i) {
-          return LIST_ARRAY.eq(i).attr('id') !== TODOLIST_ITEMS[i].id;
+          return LIST_ARRAY.eq(i).attr("id") !== TODOLIST_ITEMS[i].id;
         },
         true
       );
@@ -154,11 +160,11 @@ $(function() {
   }
 
   function allRemoveTodo() {
-    $('#todo > li')
+    $("#todo > li")
       .parent()
       .empty();
-    $('#reset_todo').hide();
-    delLocalStorage('todo');
+    $("#reset_todo").hide();
+    delLocalStorage("todo_J");
   }
 
   /* 날씨 관련 */
@@ -167,7 +173,7 @@ $(function() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(getCoords, showError);
     } else {
-      alert('Geolocation is not supported by this browser.');
+      alert("Geolocation is not supported by this browser.");
     }
   }
 
@@ -182,8 +188,8 @@ $(function() {
       longitude: longitude
     };
 
-    if (localStorage.getItem('weather') == null) {
-      saveLocalStorage('weather', JSON.stringify(WEATHER_ARRAY));
+    if (localStorage.getItem("weather_J") == null) {
+      saveLocalStorage("weather_J", JSON.stringify(WEATHER_ARRAY));
     }
     getWeather(latitude, longitude);
   }
@@ -191,16 +197,16 @@ $(function() {
   function showError(error) {
     switch (error.code) {
       case error.PERMISSION_DENIED:
-        alert('User denied the request for Geolocation.');
+        alert("User denied the request for Geolocation.");
         break;
       case error.POSITION_UNAVAILABLE:
-        alert('Location information is unavailable.');
+        alert("Location information is unavailable.");
         break;
       case error.TIMEOUT:
-        alert('The request to get user location timed out.');
+        alert("The request to get user location timed out.");
         break;
       case error.UNKNOWN_ERROR:
-        alert('An unknown error occurred.');
+        alert("An unknown error occurred.");
         break;
     }
   }
@@ -218,17 +224,17 @@ $(function() {
         const place = json.name;
         const humidity = json.main.humidity;
         const weatherStatus = json.weather[0].main;
-        $('#weather').text(
+        $("#weather").text(
           `기온: ${temp}C° / 지역: ${place} / 날씨 = ${weatherStatus} / 습도: ${humidity}%`
         );
-        $('#reset_weather').show();
+        $("#reset_weather").show();
       });
   }
 
   function delWeather() {
-    delLocalStorage('weather');
-    $('#weather').empty();
-    $('#reset_weather').hide();
+    delLocalStorage("weather_J");
+    $("#weather").empty();
+    $("#reset_weather").hide();
   }
 
   /* 로컬스토리지 */
@@ -249,16 +255,16 @@ $(function() {
   function init() {
     setBackground();
     checkReset();
-    $('.btn_reset').on('click', checkReset);
+    $(".btn_reset").on("click", checkReset);
 
     getGreeting();
-    $('#greeting_text').on('keydown', setGreeting);
+    $("#greeting_text").on("keydown", setGreeting);
 
     if (TODOLIST_ITEMS != null) {
       getTodo();
     }
-    $(document).on('click', '#todo > li > button, #reset_todo', delTodo);
-    $('#todo_text').on('keydown', setTodo);
+    $(document).on("click", "#todo > li > button, #reset_todo", delTodo);
+    $("#todo_text").on("keydown", setTodo);
 
     getLocation();
   }
