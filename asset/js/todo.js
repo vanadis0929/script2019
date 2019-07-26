@@ -14,16 +14,16 @@ function setTodo(event) {
   if (event.which == 13) {
     if (TODO_ITEM.length > 0) {
       const node = document.createElement("li");
-      node.setAttribute('id', `${TODO_JSON.id}`)
+      node.setAttribute("id", `${TODO_JSON.id}`);
       node.innerHTML = `${TODO_JSON.title} <button type="button">✂️</button>`;
       TODOLIST_UL.appendChild(node);
       TODO_ARRAY.push(TODO_JSON);
       //console.log(TODO_ARRAY);
       saveTodo();
       //console.log(TODO_LENGTH)
-      TODO_ARRAY.length > 0 ?
-        (resetTodo.style.display = "initial") :
-        (resetTodo.style.display = "none");
+      TODO_ARRAY.length > 0
+        ? (resetTodo.style.display = "initial")
+        : (resetTodo.style.display = "none");
       this.value = "";
     } else {
       alert("할 일을 입력해 주세요.");
@@ -42,38 +42,41 @@ function getTodo() {
     TODO_ARRAY = TODOLIST_LS;
     for (i = 0; i < TODOLIST_LS.length; i++) {
       const node = document.createElement("li");
-      node.setAttribute('id', `${TODOLIST_LS[i].id}`)
-      node.innerHTML = `${TODOLIST_LS[i].title} <button type="button">✂️</button>`;
+      node.setAttribute("id", `${TODOLIST_LS[i].id}`);
+      node.innerHTML = `${
+        TODOLIST_LS[i].title
+      } <button type="button">✂️</button>`;
       TODOLIST_UL.appendChild(node);
     }
 
-    TODO_LENGTH.length > 0 ?
-      (resetTodo.style.display = "initial") :
-      (resetTodo.style.display = "none");
+    TODO_LENGTH.length > 0
+      ? (resetTodo.style.display = "initial")
+      : (resetTodo.style.display = "none");
   }
 }
 
-function delTodo() {
+function delTodo(event) {
   const LIST_ARRAY = document.querySelectorAll("#todo > li");
-
+  console.log(typeof TODO_ARRAY);
   if (this.getAttribute("id") == "reset_todo") {
     allRemoveTodo();
   } else {
-    //this.parentNode.removeAttribute("id");
-    console.log(this.parentNode);
-    //this.parentNode.style.display = "none";
+    const target = event.target;
+    TODOLIST_UL.removeChild(target.parentNode);
     //console.log(TODO_ARRAY);
-    const processTodo = TODO_ARRAY.filter(function (result) {
-      //return TODO_ARRAY.id !== LIST_ARRAY.id;
-      console.log(TODO_ARRAY.id !== LIST_ARRAY.id)
+    const processTodo = TODO_ARRAY.filter(function(element, index) {
+      //return target.parentNode[index];
+      return TODO_ARRAY[index].id != target.parentNode.id;
     });
+    //id를 없애면 id가 없는 항목은 아예 검사자체를 하지 않음...
 
-    //TODO_ARRAY = processTodo;
+    console.log(processTodo);
+    TODO_ARRAY = processTodo;
     //console.log(TODO_ARRAY.length);
     if (TODO_ARRAY.length == 0) {
       allRemoveTodo();
     }
-    //saveTodo();
+    saveTodo();
     checkReset();
   }
 }

@@ -12,8 +12,7 @@ body {
   height: 100%;
 }
 
-
-input[type=text] {
+input[type="text"] {
   width: 100%;
   padding: 0 10px;
   height: 30px;
@@ -26,15 +25,11 @@ input[type=text] {
   box-shadow: none;
 }
 
-
-
 body {
   background-color: $myColor;
-  font: 16px/1.6 'Noto Sans KR', sans-serif;
+  font: 16px/1.6 "Noto Sans KR", sans-serif;
   word-break: keep-all;
   word-wrap: break-word;
-
-
 }
 
 @-webkit-keyframes hue {
@@ -104,18 +99,16 @@ body {
   img.complete {
     opacity: 1;
   }
-
 }
 
 .reset_area {
   text-align: center;
   margin: 0;
 
-  >* {
+  > * {
     display: none;
   }
 }
-
 
 #greeting {
   margin-top: 20px;
@@ -135,8 +128,28 @@ body {
   &.apply {
     h1 {
       display: inline-block;
-      background: -webkit-gradient(linear, left top, right top, from(#ff0000), color-stop(17%, #ff9500), color-stop(34%, #ffff00), color-stop(51%, #00ff00), color-stop(67%, #0000ff), color-stop(84%, #00177f), to(#ad20e5));
-      background: linear-gradient(to right, #ff0000 0%, #ff9500 17%, #ffff00 34%, #00ff00 51%, #0000ff 67%, #00177f 84%, #ad20e5 100%);
+      background: -webkit-gradient(
+        linear,
+        left top,
+        right top,
+        from(#ff0000),
+        color-stop(17%, #ff9500),
+        color-stop(34%, #ffff00),
+        color-stop(51%, #00ff00),
+        color-stop(67%, #0000ff),
+        color-stop(84%, #00177f),
+        to(#ad20e5)
+      );
+      background: linear-gradient(
+        to right,
+        #ff0000 0%,
+        #ff9500 17%,
+        #ffff00 34%,
+        #00ff00 51%,
+        #0000ff 67%,
+        #00177f 84%,
+        #ad20e5 100%
+      );
       -webkit-text-fill-color: transparent;
       -webkit-background-clip: text;
       -webkit-animation: hue 2s infinite linear;
@@ -147,13 +160,11 @@ body {
     input {
       display: none;
     }
-
-
   }
 }
 
 .todoList {
-  >div {
+  > div {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -167,7 +178,7 @@ body {
       flex: 1;
       margin-bottom: 20px;
       padding: 10px;
-      background: rgba(0, 0, 0, .25);
+      background: rgba(0, 0, 0, 0.25);
       border-radius: 5px;
       color: #fff;
 
@@ -179,24 +190,27 @@ body {
       }
 
       &#todo:before {
-        content: '해야 할 일';
+        content: "해야 할 일";
       }
 
       &#todoComplete {
-        >li {
+        > li {
           text-decoration: line-through;
           -webkit-text-decoration-color: #000;
           text-decoration-color: #000;
         }
 
         &:before {
-          content: '완료 한 일';
+          content: "완료 한 일";
         }
-
       }
 
-      >li {
-        span {}
+      > li {
+        &:not([id]) {
+          display: none;
+        }
+        span {
+        }
 
         button {
           border: none;
@@ -211,17 +225,12 @@ body {
         }
       }
 
-
-
-
       &:empty {
         display: none;
       }
     }
-
   }
 }
-
 
 #weather {
   position: fixed;
@@ -231,7 +240,7 @@ body {
   color: #fff;
   font-size: 20px;
   text-align: center;
-  background: rgba(0, 0, 0, .25);
+  background: rgba(0, 0, 0, 0.25);
 
   &:empty {
     display: none;

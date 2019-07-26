@@ -197,7 +197,7 @@ body {
   height: 100%;
 }
 
-input[type=text] {
+input[type="text"] {
   width: 100%;
   padding: 0 10px;
   height: 30px;
@@ -212,7 +212,7 @@ input[type=text] {
 
 body {
   background-color: #f7f7f7;
-  font: 16px/1.6 'Noto Sans KR', sans-serif;
+  font: 16px/1.6 "Noto Sans KR", sans-serif;
   word-break: keep-all;
   word-wrap: break-word;
 }
@@ -352,7 +352,7 @@ body {
 }
 
 .todoList > div ul#todo:before {
-  content: '해야 할 일';
+  content: "해야 할 일";
 }
 
 .todoList > div ul#todoComplete > li {
@@ -362,7 +362,11 @@ body {
 }
 
 .todoList > div ul#todoComplete:before {
-  content: '완료 한 일';
+  content: "완료 한 일";
+}
+
+.todoList > div ul > li:not([id]) {
+  display: none;
 }
 
 .todoList > div ul > li button {
