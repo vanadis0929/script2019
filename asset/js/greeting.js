@@ -22,6 +22,7 @@ function getGreeting() {
     messageTargetChild[1].innerText = greetingName;
     greetingText.style.display = "none";
     messageContainer.setAttribute("class", "apply");
+    document.querySelector("#reset_name").style.display = "block";
   } else {
     //console.log("d111");
     greetingText.style.display = "block";

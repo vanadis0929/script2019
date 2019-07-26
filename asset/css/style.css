@@ -287,6 +287,8 @@ body {
 .reset_area {
   text-align: center;
   margin: 0;
+  display: flex;
+  justify-content: center;
 }
 
 .reset_area > * {

@@ -30,6 +30,7 @@ function setTodo(event) {
         : (resetTodo.style.display = "none");
       this.value = "";
       button.addEventListener("click", delTodo);
+      document.querySelector("#reset_todo").style.display = "block";
     } else {
       alert("할 일을 입력해 주세요.");
     }
@@ -56,7 +57,7 @@ function getTodo() {
       button.addEventListener("click", delTodo);
     }
 
-    TODO_LENGTH.length > 0
+    TODO_ARRAY.length > 0
       ? (resetTodo.style.display = "initial")
       : (resetTodo.style.display = "none");
   }
@@ -84,7 +85,6 @@ function delTodo(event) {
       allRemoveTodo();
     }
     saveTodo();
-    checkReset();
   }
 }
 
