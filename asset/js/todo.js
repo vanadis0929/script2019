@@ -13,10 +13,14 @@ function setTodo(event) {
   };
   if (event.which == 13) {
     if (TODO_ITEM.length > 0) {
-      const node = document.createElement("li");
-      node.setAttribute("id", `${TODO_JSON.id}`);
-      node.innerHTML = `${TODO_JSON.title} <button type="button">✂️</button>`;
-      TODOLIST_UL.appendChild(node);
+      const li = document.createElement("li");
+      const button = document.createElement("button");
+      li.setAttribute("id", `${TODO_JSON.id}`);
+      li.innerText = TODO_JSON.title;
+      button.innerText = "✂️";
+      li.appendChild(button);
+      TODOLIST_UL.appendChild(li);
+
       TODO_ARRAY.push(TODO_JSON);
       //console.log(TODO_ARRAY);
       saveTodo();
@@ -25,6 +29,7 @@ function setTodo(event) {
         ? (resetTodo.style.display = "initial")
         : (resetTodo.style.display = "none");
       this.value = "";
+      button.addEventListener("click", delTodo);
     } else {
       alert("할 일을 입력해 주세요.");
     }
@@ -41,12 +46,14 @@ function getTodo() {
     /* 리스트를  담고 새로고침하면 기존 데이터를 다 날리고 새로 push하는 이슈방지(기존에 있던 리스트를 다시 배열에 집어넣는다)*/
     TODO_ARRAY = TODOLIST_LS;
     for (i = 0; i < TODOLIST_LS.length; i++) {
-      const node = document.createElement("li");
-      node.setAttribute("id", `${TODOLIST_LS[i].id}`);
-      node.innerHTML = `${
-        TODOLIST_LS[i].title
-      } <button type="button">✂️</button>`;
-      TODOLIST_UL.appendChild(node);
+      const li = document.createElement("li");
+      const button = document.createElement("button");
+      li.setAttribute("id", `${TODOLIST_LS[i].id}`);
+      li.innerText = TODOLIST_LS[i].title;
+      button.innerText = "✂️";
+      li.appendChild(button);
+      TODOLIST_UL.appendChild(li);
+      button.addEventListener("click", delTodo);
     }
 
     TODO_LENGTH.length > 0
@@ -57,7 +64,7 @@ function getTodo() {
 
 function delTodo(event) {
   const LIST_ARRAY = document.querySelectorAll("#todo > li");
-  console.log(typeof TODO_ARRAY);
+  //console.log(typeof TODO_ARRAY);
   if (this.getAttribute("id") == "reset_todo") {
     allRemoveTodo();
   } else {
@@ -86,13 +93,7 @@ function allRemoveTodo() {
   resetTodo.style.display = "none";
   localStorage.removeItem("todo");
 }
-
 todoTarget.addEventListener("keydown", setTodo);
 if (TODOLIST_LS != null) {
   getTodo();
-}
-
-const delTodoTarget = document.querySelectorAll("#todo > li button");
-for (i = 0; i < delTodoTarget.length; i++) {
-  delTodoTarget[i].addEventListener("click", delTodo);
 }
