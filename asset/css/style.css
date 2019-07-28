@@ -50,4 +50,8 @@ body {
   font: 16px/1.6 'Noto Sans KR', sans-serif;
 }
 
+body:first-child {
+  display: block;
+}
+
 /*# sourceMappingURL=style.css.map */

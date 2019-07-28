@@ -1,15 +1,35 @@
 <!DOCTYPE html>
 <html lang="ko">
-
-  <head>
-    <title>jQuery로 만들기</title>
-    <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="/asset/css/style.css">
-    <script src="/asset/js/jquery-3.4.1.min.js"></script>
-  </head>
-
-  <body>
-    jQuery로 만들기
-  </body>
-
+<head>
+	<title>ex</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, target-densitydpi=medium-dpi" name="viewport" />
+	<meta name="title" content="">
+	<meta name="description" content="">
+	<meta name="keyword" content="">
+	<meta property="og:title" content="메인화면">
+	<meta property="og:description" content="">
+	<meta property="og:site_name" content="">
+	<meta property="og:type" content="website">
+	<meta charset="utf-8">
+	<meta name="robots" content="ALL">
+	<link rel="stylesheet" type="text/css" href="/asset/css/setup.css" media="all">
+</head>
+<body>
+	<div class="wrapper">
+		<div class="bg type0"></div>
+	</div>
+	<!-- script group -->
+	<script src="/asset/js/jquery-1.11.3.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			// [1]random 배경 - jq ver.
+			var randomNum = Math.floor(Math.random() * 5);
+			var newClass = 0;
+			newClass = 'type'+ randomNum;
+			$('.bg').addClass(newClass);
+		});
+	</script>
+	<!--// script group -->
+</body>
 </html>
