@@ -2,226 +2,140 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<title>TodoList</title>
+<title>Script_TodoList</title>
 <style>
 body { margin: 0; padding: 0;}
 body * { margin: 0; padding: 0; line-height: 20px; font-size: 14px; box-sizing: border-box; }
 #wrap { margin: 0 auto; width: 700px;  }
-.top { margin-bottom: 30px;  padding: 50px; background: #f8f8f8; text-align: center; }
-.top h1 { margin-bottom: 50px; color: #333; line-height: 40px; font-size: 30px; }
-.top h1 span { padding: 10px; background: #fff; line-height: 40px; font-size: 30px;}
-.top h1 em { line-height: 40px; font-size: 30px; }
-.top .time { display: inline-block; padding: 5px 10px; color: #333; line-height: 30px; font-size: 15px; background: #fff;  }
-.weather { display: inline-block; margin-top: 30px; vertical-align: top; padding: 0 10px; background: #fff; }
-.weather #chatLog { display: inline-block; color: #333; line-height: 50px; font-size: 15px; vertical-align: top;   }
-.weather img { vertical-align: top; }
-.todo_wrap h2 { margin-bottom: 30px; line-height: 30px; font-size: 20px; text-align: center;  }
+.todo_wrap h2 { margin-bottom: 30px; padding:50px; line-height: 50px; font-size: 30px; text-align: center; background: #d5eaf3;  }
 .add_area { position: relative; margin-bottom: 50px; padding-right: 150px; }
 .add_area input { display: block; padding: 0 20px; width: 100%; height: 40px; border: 1px solid #c8c8c8; }
-.add_area button { position: absolute; top: 0; right: 0; width: 150px; height: 40px; border: 0 none; color: #fff; font-size: 14px; background: #543275; }
-#todoList  { list-style: none;}
-#todoList li { position: relative; padding: 0 20px; border: 1px solid #c8c8c8; border-top: 0 none;  line-height: 50px; }
-#todoList li:first-child { border-top: 1px solid #c8c8c8; }
-#todoList li:nth-child(even) { background: #e8e8e8;}
-#todoList li .btnClose { position: absolute; top: 0; right: 0; width: 50px; height: 50px; border: 0 none; background: none; line-height: 50px; font-size: 20px; text-align: center;  }
+.add_area button { position: absolute; top: 0; right: 0; width: 150px; height: 40px; border: 0 none; color: #fff; font-size: 14px; background: #0a719c; }
+#todolist  { list-style: none;}
+#todolist li { position: relative; padding: 0 20px; border: 1px solid #c8c8c8; border-top: 0 none;  line-height: 50px; }
+#todolist li:first-child { border-top: 1px solid #c8c8c8; }
+#todolist li:nth-child(even) { background: #e8e8e8;}
+#todolist li .btnClose { position: absolute; top: 0; right: 0; width: 50px; height: 50px; border: 0 none; background: none; line-height: 50px; font-size: 20px; text-align: center;  }
 </style>
 </head>
 <body>
-<!-- wrap -->    
+<!-- wrap -->
 <div id="wrap">
-    <div class="top" id="top">
-        <h1><span><em id="member_name" class="member_name"></em> Hello!!</span></h1>
-        <p class="time" id="time"></p><br />
-        <div class="weather">
-            <p id="chatLog"></p>
-            <img src="" id="img" />
-        </div>
-    </div>
     <div class="todo_wrap">
         <h2>To do list</h2>
         <div class="add_area">
             <input type="text" id="inputText" placeholder="할 일을 입력하세요." />
             <button type="button" id="btnAdd">Add</button>
         </div>
-        <h2>오늘의 할 일</h2>
-        <ul id="todoList">
+        <ul id="todolist">
         </ul>
     </div>
 </div>
-<!-- //wrap -->  
+<!-- //wrap --> 
 
-<script type="text/javascript">
-    //1. 새로고침 할 때 마다 배경이 바꾸기
-    var randomColor = '#'+ ('000000' + Math.floor(Math.random()*16777215).toString(16)).slice(-6);  //소수색생 : 16777215 (밝은색상)   
-    document.getElementById('top').style.backgroundColor = randomColor; 
-   
+<script>
+    // 리스트 데이터 배열.
+    let todoArr = new Array();
 
+    // 스토리지에 데이터가 있으면 화면에 출력.
+    if(localStorage.getItem("todo") !== null){
+        todoArr = JSON.parse(localStorage.getItem("todo"));
+        todoArr.forEach(element => {
+            addNewItem(element.itemText);
+        });
+    }
 
-    //2. 이름 입력하는 칸 만들어서 'hello 누구누구님 이렇게 나오게' (새로고침해도 유지 되게)
-    // 브라우저에서 F12 누르시고 console 창에 localStorage.clear(); 요거 실행해서 localStorage 삭제 후 해보세요.
-    if (localStorage.getItem("lastname") !== null) {
-        // Retrieve 회복
-        document.getElementById('member_name').innerHTML = localStorage.getItem("lastname");
-    } else {
-    	var lastname = prompt('이름을 입력하세요');
-    	document.getElementById('member_name').innerHTML = lastname;
+    // Enter키 event 추가
+    document.getElementById('inputText').addEventListener("keyup", function(e){
+        if(e.which === 13){
+            const itemText = inputText.value;
+            addNewItem(itemText);
+            todoArr.push({'itemText' : itemText}); 
+            saveLocalStorage("todo", JSON.stringify(todoArr));
+        }
+    });
+
+    // Add버튼 event 추가
+    document.getElementById('btnAdd').addEventListener("click", function(e){
+        const itemText = inputText.value;
+        addNewItem(itemText);
+        todoArr.push({'itemText' : itemText}); 
+        saveLocalStorage("todo", JSON.stringify(todoArr));
+    });
+    
+    //  추가
+    function addNewItem(itemText){
+        if(!itemText || itemText.trim() === "") return false;  //blank 방지
+
+        let listItem = document.createElement('li');
+        listItem.innerText = itemText;  // 할일 텍스트 추가
+        document.getElementById('todolist').appendChild(listItem);    // li 추가        
+        
+        
+        let btnDel = document.createElement('button');  //삭제버튼 생성
+        let txt = document.createTextNode("\u00D7");    //삭제버튼 텍스츠 생성
+        btnDel.className = "btnClose";                  //삭제버튼 클래스 추가
+        btnDel.appendChild(txt);                        //삭제버튼에 텍스트 추가
+        listItem.appendChild(btnDel);                   //리스트에 삭제버튼 추가 
+        btnDel.onclick = removeItem;                    //삭제버튼 클릭시 삭제 함수 호출          
+
+        inputText.value = '';
+    }
+    // 리스트 목록 삭제
+    function removeItem(){
+        let todoItem = this.parentElement;
+
+        // Ul element
+        const idx = Array.prototype.indexOf.call(todoItem.parentNode.childNodes, todoItem);
+
+        todoArr.splice(idx-1 , 1);
+        localStorage.setItem('todo', JSON.stringify(todoArr));
+
+        todoItem.parentNode.removeChild(todoItem.parentNode.childNodes[idx]);
+    }
+
+    // 로컬스토리지 저장.
+    function saveLocalStorage(key, value) {     
         // Store 저장
-        localStorage.setItem("lastname", lastname); 
-    }  
-    
-
-
-    //추가문제 : 시계 https://mkil.tistory.com/343
-    setInterval(time , 1000);
-    function time() {
-        var date = new Date();
-        var timeText = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
-        document.getElementById("time").innerHTML =  timeText;
-    }   
-    time();
-
-
-    // 3. todo 리스트 만들기 (input에 입력하면 ul로 리스트가 저장되게, 각각 지워지게) (새로고침해도 유지 되게)
-    // 참고 : https://www.w3schools.com/howto/howto_js_todolist.asp
-    // https://it-tutorial.tistory.com/133
-
-    var myNodelist = document.getElementsByTagName("LI");
-    var i;
-    for (i = 0; i < myNodelist.length; i++) {
-        var span = document.createElement("SPAN");
-        var txt = document.createTextNode("\u00D7");
-        span.className = "close";
-        span.appendChild(txt);
-        myNodelist[i].appendChild(span);
-        console.log(myNodelist.length);
+        localStorage.setItem(key, value);
     }
 
+    // 리스트 목록 삭제
+    // function removeItem(){
+    //     let todoItem = this.parentElement;
+    //     let todo = todoItem.parentNode;
 
-    
-    var btnAdd = document.getElementById("btnAdd");
-    btnAdd.onclick = function() {
-        var inputValue = document.getElementById("inputText").value;
-        var text = document.createTextNode(inputValue);
-                
+    //     // Ul element
+    //     const idx = indexInParent(todoItem);
+    //     todoArr.splice(idx, 1);
+    //     //console.log(todoArr);
+    //     localStorage.setItem('todo', JSON.stringify(todoArr));
+    //     todo.removeChild(todoItem);
+    // }    
 
-        if(inputValue !== ''){
-            var li = document.createElement("li");
-            li.appendChild(text);
-            document.getElementById("todoList").appendChild(li);
-            li.insertAdjacentHTML('beforeend','<button type="button" class="btnClose">\u00D7</button>');
-            document.getElementById("inputText").value = '';
-        }
+    // 현재 Node의 Index.
+    // function indexInParent(node) {
+    //     var children = node.parentNode.childNodes;
 
-        var close = document.getElementsByClassName("btnClose"); 
-       
-        close.onclick = function() {
-            console.log(close.length);  
-            //var removeItem = this.parentElement;
-            //document.getElementById("todoList").removeChild(removeItem);
-        }
+    //     var num = 0;
+    //     for (var i=0; i<children.length; i++) {
+    //         if (children[i]==node) return num;
+    //         if (children[i].nodeType==1) num++;
+    //     }   
+    //     return -1;
+    // }
 
-    }
-    
-
-    // var close = document.getElementsByClassName("btnClose"); 
-    // //console.log(close.length);  
-    // for (var i = 0; i < close.length; i++) {
-    //     close[i].onclick = function() {
-            
-    //         var removeItem = this.parentElement;
-    //         document.getElementById("todoList").removeChild(removeItem);
-    //     }
+    // 현재 Node의 Index.
+    //https://stackoverflow.com/questions/4649699/is-it-possible-to-get-elements-numerical-index-in-its-parent-node-without-loopi
+    // function indexInParent (element) {
+    //     console.log(element);
+    //     return Array.from(element.parentNode.children).indexOf(element);
     // }
 
 
 
 
-    // $('#btnAdd').on('click',function(){
-    //     if($('#inputText').val() !== ''){
-    //         var task = $('#inputText').val();
-    //         var todoItem = $('<li>'+ task + '<button type="button" class="btnClose">\u00D7</button></li>' );
-    //         $('#todoList').append(todoItem);
-    //         $('#inputText').val('');
-
-    //         $('.btnClose').on('click',function(){
-    //             $(this).parent().remove();
-    //         });
-    //     }
-    // });
-
-
-
     
-    
-    // 4.날씨 정보 받아오기 (위치, 지역, 온도 정도 나오게) 
-    //   https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${API_KEY}&units=metric api fetch는 잘 모르면 검색등을 통해서 찾아서 해봤으면 좋겠음 
-    // https://api.openweathermap.org 에서 회원가입해서 API키를 발급받아야 날씨정보를 가져 올 수 있음.
-    // 내키 : 570ce360cce8d6bce73eb7cde115ec71
-    // 참고 : https://blog.naver.com/PostView.nhn?blogId=yoon-d&logNo=221533941004&parentCategoryNo=&categoryNo=9&viewDate=&isShowPopularPosts=true&from=search
-
-    const weather = document.querySelector(".weather");
-
-    const API_KEY = "570ce360cce8d6bce73eb7cde115ec71"; // 위에서 복사한 API key (뒤에 세자리 가림***) 
-    const COORDS = "coords";  // localStoraged에 저장할 키 이름
-
-    // api사용 함수
-    function getWeather(lat,lng){               // 위도 경도 넘겨받음
-    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${API_KEY}&units=metric`
-    ).then(function(response){
-        return response.json();               // json 데이터 가져오기 
-    }).then(function(json){                   // then을 한번 더 사용해 json데이터 가져올때 까지 기다림    
-        const temperature = json.main.temp;     // 온도
-        const place = json.name;   // 도시 이름
-        var lont = json.coord.lon; // 위치이름 
-        var latt = json.coord.lat; // 위치이름 
-        weather.innerText =  '위치 : ' + lont + ',' + latt + ' / 지역 ：' + place + ' / 온도：' + temperature + "도입니다. "+'\n' ;   // `${temperature} @ ${place}`   //weather(".js-weather"인 html위치)에 온도 @ 도시 출력
-    });
-    // then은 api가 정보를 다 가져올때까지 기다리겠다는 함수
-    }
-
-    // localStorage에 저장하는 메소드
-    function saveCoords(coordsObj){
-        localStorage.setItem(COORDS,JSON.stringify(coordsObj));  // localStorage에 저장하려면 string이어야하므로 바꿔서 저징
-    }
-
-    // 위치정보 성공적으로 읽올 시 실행 - 읽은 정보에서 좌표값 가져옴
-    function handleGeoSuccess(position){            
-    const latitude = position.coords.latitude;    // 위도
-    const longitude = position.coords.longitude;  // 경도
-    const coordsObj = {         // 객체에 저장
-        latitude,                 // 객체의 변수 이름과 객체의 key이름이 같다면 이렇게 생략가능
-        longitude
-    }
-    saveCoords(coordsObj);      // localStorage에 저장하는 함수 호출
-    getWeather(latitude, longitude);    // api사용 함수 호출
-    }
-
-    // 위치정보 에러 시 실행 할 메소드
-    function handleGeoError(){
-     console.log("Cant access geo location");
-    }
-
-    // 좌표 요청 함수
-    function askForCoords(){
-        navigator.geolocation.getCurrentPosition(handleGeoSuccess, handleGeoError);   // 위치 정보 읽음
-    }
-
-    // 위치정보 로드 함  
-    function loadedCoords(){
-    const loadedCoords = localStorage.getItem(COORDS);  // 일단 저장된 coords 가져옴 
-    if(loadedCoords === null){  // 저장된 값 없으면 위치정보 읽는 메소드 실행
-        askForCoords(); 
-    }else{
-        const parsedCoords = JSON.parse(loadedCoords);    // 있다면 가져와서 object로 파싱
-        getWeather(parsedCoords.latitude,parsedCoords.longitude); // 파싱된 object를 날씨api메소드로 넘겨줌
-    }
-    }
-
-    function init(){
-        loadedCoords();   // 위치정보 로드
-    }
-
-    init();
-    </script>
+</script>
 </body>
 </html>
