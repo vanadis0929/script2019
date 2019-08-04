@@ -2,7 +2,6 @@
 
 
 @import url('common.css');
-@import url('basic.css');
 
 
 
@@ -14,6 +13,11 @@
 .bg.type4 { background-image: url('../images/5.jpg'); }
 
 
-
-
-}
+/* todo list */
+.wrapper { margin: 20px auto 0; padding: 20px; width: 80%; border: 1px solid #ddd; }
+.todo-input { position: relative; padding-right: 20%; }
+.todo-input input { padding: 10px; width: 100%; border: 1px solid #000; -webkit-box-sizing: border-box; box-sizing: border-box;}
+.todo-input button { position: absolute; top: 0; right: 0; width: 20%; text-align: center; color: #fff; background: #000; height: 36px; padding: 0 10px; -webkit-box-sizing: border-box; box-sizing: border-box; }
+.todolist .list { border: 1px solid #000; }
+.todolist .list li { position: relative; padding: 5px; background: #ddd; border-top: 1px solid #333; }
+.todolist .list button { position: absolute; top: 0; right: 0; background: #000; color: #fff; padding: 5px; } 

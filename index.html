@@ -1,14 +1,60 @@
 <!DOCTYPE html>
 <html lang="ko">
+<head>
+	<title>To do list - jquery ver.</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, target-densitydpi=medium-dpi" name="viewport" />
+	<meta name="title" content="">
+	<meta name="description" content="">
+	<meta name="keyword" content="">
+	<meta property="og:title" content="메인화면">
+	<meta property="og:description" content="">
+	<meta property="og:site_name" content="">
+	<meta property="og:type" content="website">
+	<meta charset="utf-8">
+	<meta name="robots" content="ALL">
+	<link rel="stylesheet" type="text/css" href="/asset/css/setup.css" media="all">
+</head>
+<body>
+	<div class="wrapper todolist">
+		<div class="todo-input">
+			<input type="text" placeholder="해야할일은?" />
+			<button type="button">등록</button>
+		</div>
+		<ul class="list">
+		</ul>
+	</div>
+	<!-- script group -->
+	<script src="/asset/js/jquery-1.11.3.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			
+			let todoArr = new Array();
+			// todo list 추가
+			$(document).on('click','.todo-input button',function(){
+				const todoVal = $('.todo-input input').val();
+				const del = $('<button type="button">' + 'X' + '</button>');
+				const addArr = $('.list').append('<li>' + todoVal + '<button>X</button></li>');
+				todoArr.push(addArr);
+			});
 
-  <head>
-    <title>순수 스크립트로 만들기</title>
-    <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="/asset/css/style.css">
-  </head>
+			// todo list 삭제
+			$(document).on('click','.list button',function(){
+				$(this).parent('li').remove();
+			});
 
-  <body>
-    순수 스크립트로 만들기
-  </body>
-
+			//localStorage에 저장
+			localStorage.setItem('todo', todoTxt);
+			//localStorage에서 정보 가져오기
+			const todoTxt = localStorage.getItem("todo");
+			if (todoVal === null) {
+				prompt("할일을 입력하세요");
+			} 
+			else {
+				
+			}
+		});
+	</script>
+	<!--// script group -->
+</body>
 </html>
