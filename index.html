@@ -3,20 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>Script_TodoList</title>
-<style>
-body { margin: 0; padding: 0;}
-body * { margin: 0; padding: 0; line-height: 20px; font-size: 14px; box-sizing: border-box; }
-#wrap { margin: 0 auto; width: 700px;  }
-.todo_wrap h2 { margin-bottom: 30px; padding:50px; line-height: 50px; font-size: 30px; text-align: center; background: #d5eaf3;  }
-.add_area { position: relative; margin-bottom: 50px; padding-right: 150px; }
-.add_area input { display: block; padding: 0 20px; width: 100%; height: 40px; border: 1px solid #c8c8c8; }
-.add_area button { position: absolute; top: 0; right: 0; width: 150px; height: 40px; border: 0 none; color: #fff; font-size: 14px; background: #0a719c; }
-#todolist  { list-style: none;}
-#todolist li { position: relative; padding: 0 20px; border: 1px solid #c8c8c8; border-top: 0 none;  line-height: 50px; }
-#todolist li:first-child { border-top: 1px solid #c8c8c8; }
-#todolist li:nth-child(even) { background: #e8e8e8;}
-#todolist li .btnClose { position: absolute; top: 0; right: 0; width: 50px; height: 50px; border: 0 none; background: none; line-height: 50px; font-size: 20px; text-align: center;  }
-</style>
+<link rel="stylesheet" type="text/css" href="/asset/css/style.css"rel="preload" />
 </head>
 <body>
 <!-- wrap -->
@@ -32,110 +19,6 @@ body * { margin: 0; padding: 0; line-height: 20px; font-size: 14px; box-sizing: 
     </div>
 </div>
 <!-- //wrap --> 
-
-<script>
-    // 리스트 데이터 배열.
-    let todoArr = new Array();
-
-    // 스토리지에 데이터가 있으면 화면에 출력.
-    if(localStorage.getItem("todo") !== null){
-        todoArr = JSON.parse(localStorage.getItem("todo"));
-        todoArr.forEach(element => {
-            addNewItem(element.itemText);
-        });
-    }
-
-    // Enter키 event 추가
-    document.getElementById('inputText').addEventListener("keyup", function(e){
-        if(e.which === 13){
-            const itemText = inputText.value;
-            addNewItem(itemText);
-            todoArr.push({'itemText' : itemText}); 
-            saveLocalStorage("todo", JSON.stringify(todoArr));
-        }
-    });
-
-    // Add버튼 event 추가
-    document.getElementById('btnAdd').addEventListener("click", function(e){
-        const itemText = inputText.value;
-        addNewItem(itemText);
-        todoArr.push({'itemText' : itemText}); 
-        saveLocalStorage("todo", JSON.stringify(todoArr));
-    });
-    
-    //  추가
-    function addNewItem(itemText){
-        if(!itemText || itemText.trim() === "") return false;  //blank 방지
-
-        let listItem = document.createElement('li');
-        listItem.innerText = itemText;  // 할일 텍스트 추가
-        document.getElementById('todolist').appendChild(listItem);    // li 추가        
-        
-        
-        let btnDel = document.createElement('button');  //삭제버튼 생성
-        let txt = document.createTextNode("\u00D7");    //삭제버튼 텍스츠 생성
-        btnDel.className = "btnClose";                  //삭제버튼 클래스 추가
-        btnDel.appendChild(txt);                        //삭제버튼에 텍스트 추가
-        listItem.appendChild(btnDel);                   //리스트에 삭제버튼 추가 
-        btnDel.onclick = removeItem;                    //삭제버튼 클릭시 삭제 함수 호출          
-
-        inputText.value = '';
-    }
-    // 리스트 목록 삭제
-    function removeItem(){
-        let todoItem = this.parentElement;
-
-        // Ul element
-        const idx = Array.prototype.indexOf.call(todoItem.parentNode.childNodes, todoItem);
-
-        todoArr.splice(idx-1 , 1);
-        localStorage.setItem('todo', JSON.stringify(todoArr));
-
-        todoItem.parentNode.removeChild(todoItem.parentNode.childNodes[idx]);
-    }
-
-    // 로컬스토리지 저장.
-    function saveLocalStorage(key, value) {     
-        // Store 저장
-        localStorage.setItem(key, value);
-    }
-
-    // 리스트 목록 삭제
-    // function removeItem(){
-    //     let todoItem = this.parentElement;
-    //     let todo = todoItem.parentNode;
-
-    //     // Ul element
-    //     const idx = indexInParent(todoItem);
-    //     todoArr.splice(idx, 1);
-    //     //console.log(todoArr);
-    //     localStorage.setItem('todo', JSON.stringify(todoArr));
-    //     todo.removeChild(todoItem);
-    // }    
-
-    // 현재 Node의 Index.
-    // function indexInParent(node) {
-    //     var children = node.parentNode.childNodes;
-
-    //     var num = 0;
-    //     for (var i=0; i<children.length; i++) {
-    //         if (children[i]==node) return num;
-    //         if (children[i].nodeType==1) num++;
-    //     }   
-    //     return -1;
-    // }
-
-    // 현재 Node의 Index.
-    //https://stackoverflow.com/questions/4649699/is-it-possible-to-get-elements-numerical-index-in-its-parent-node-without-loopi
-    // function indexInParent (element) {
-    //     console.log(element);
-    //     return Array.from(element.parentNode.children).indexOf(element);
-    // }
-
-
-
-
-    
-</script>
+<script src="/asset/js/todolist.js"></script>
 </body>
 </html>
