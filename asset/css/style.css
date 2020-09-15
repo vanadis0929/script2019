@@ -1,6 +1,148 @@
+@charset "UTF-8";
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+blockquote,
+q {
+  quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+}
+
+img {
+  vertical-align: top;
+}
+
 @font-face {
   font-family: 'Noto Sans KR';
   font-style: normal;
+  font-display: fallback;
   font-weight: 100;
   src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.woff2) format("woff2"), url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.woff) format("woff"), url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.otf) format("opentype");
 }
@@ -8,6 +150,7 @@
 @font-face {
   font-family: 'Noto Sans KR';
   font-style: normal;
+  font-display: fallback;
   font-weight: 300;
   src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.woff2) format("woff2"), url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.woff) format("woff"), url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.otf) format("opentype");
 }
@@ -15,6 +158,7 @@
 @font-face {
   font-family: 'Noto Sans KR';
   font-style: normal;
+  font-display: fallback;
   font-weight: 400;
   src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.woff2) format("woff2"), url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.woff) format("woff"), url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.otf) format("opentype");
 }
@@ -22,6 +166,7 @@
 @font-face {
   font-family: 'Noto Sans KR';
   font-style: normal;
+  font-display: fallback;
   font-weight: 500;
   src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.woff2) format("woff2"), url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.woff) format("woff"), url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.otf) format("opentype");
 }
@@ -29,6 +174,7 @@
 @font-face {
   font-family: 'Noto Sans KR';
   font-style: normal;
+  font-display: fallback;
   font-weight: 700;
   src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.woff2) format("woff2"), url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.woff) format("woff"), url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.otf) format("opentype");
 }
@@ -36,18 +182,224 @@
 @font-face {
   font-family: 'Noto Sans KR';
   font-style: normal;
+  font-display: fallback;
   font-weight: 900;
   src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff2) format("woff2"), url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff) format("woff"), url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.otf) format("opentype");
 }
 
 * {
-  padding: 0;
-  margin: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 0 10px;
+  height: 30px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border-radius: 0;
+  -webkit-border-radius: 0;
+  border: 1px solid #ddd;
+  -webkit-box-shadow: none;
+  box-shadow: none;
 }
 
 body {
   background-color: #f7f7f7;
-  font: 16px/1.6 'Noto Sans KR', sans-serif;
+  font: 16px/1.6 "Noto Sans KR", sans-serif;
+  word-break: keep-all;
+  word-wrap: break-word;
+}
+
+@-webkit-keyframes hue {
+  from {
+    -webkit-filter: hue-rotate(0deg);
+    filter: hue-rotate(0deg);
+  }
+  to {
+    -webkit-filter: hue-rotate(-360deg);
+    filter: hue-rotate(-360deg);
+  }
+}
+
+@keyframes hue {
+  from {
+    -webkit-filter: hue-rotate(0deg);
+    filter: hue-rotate(0deg);
+  }
+  to {
+    -webkit-filter: hue-rotate(-360deg);
+    filter: hue-rotate(-360deg);
+  }
+}
+
+.body_wrap {
+  padding: 10px;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+#bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  z-index: -1;
+}
+
+#bg img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+  object-fit: cover;
+  opacity: 0;
+  -webkit-transition: opacity 1s;
+  transition: opacity 1s;
+}
+
+#bg img.complete {
+  opacity: 1;
+}
+
+.reset_area {
+  text-align: center;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.reset_area > * {
+  display: none;
+}
+
+#greeting {
+  margin-top: 20px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+#greeting h1 {
+  font-size: 5vw;
+  font-weight: 700;
+}
+
+#greeting h1,
+#greeting input {
+  display: none;
+}
+
+#greeting.apply h1 {
+  display: inline-block;
+  background: -webkit-gradient(linear, left top, right top, from(#ff0000), color-stop(17%, #ff9500), color-stop(34%, #ffff00), color-stop(51%, #00ff00), color-stop(67%, #0000ff), color-stop(84%, #00177f), to(#ad20e5));
+  background: linear-gradient(to right, #ff0000 0%, #ff9500 17%, #ffff00 34%, #00ff00 51%, #0000ff 67%, #00177f 84%, #ad20e5 100%);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-animation: hue 2s infinite linear;
+  animation: hue 2s infinite linear;
+  text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+}
+
+#greeting.apply input {
+  display: none;
+}
+
+.todoList > div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.todoList > div ul {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  margin-bottom: 20px;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  color: #fff;
+}
+
+.todoList > div ul:before {
+  text-align: center;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.todoList > div ul#todo:before {
+  content: "해야 할 일";
+}
+
+.todoList > div ul#todoComplete > li {
+  text-decoration: line-through;
+  -webkit-text-decoration-color: #000;
+  text-decoration-color: #000;
+}
+
+.todoList > div ul#todoComplete:before {
+  content: "완료 한 일";
+}
+
+.todoList > div ul > li:not([id]) {
+  display: none;
+}
+
+.todoList > div ul > li button {
+  border: none;
+  background: none;
+  padding: 4px 5px;
+  vertical-align: 1px;
+}
+
+.todoList > div ul > li button:active {
+  -webkit-filter: invert(100%);
+  filter: invert(100%);
+}
+
+.todoList > div ul:empty {
+  display: none;
+}
+
+#weather {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  color: #fff;
+  font-size: 20px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.25);
+}
+
+#weather:empty {
+  display: none;
 }
 
 /*# sourceMappingURL=style.css.map */

@@ -3,13 +3,44 @@
 
   <head>
     <title>jQuery로 만들기</title>
-    <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="/asset/css/style.css">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,initial-scale=1,user-scalable=no" />
+    <link rel="shortcut icon" href="/asset/favicon.png" type="image/png" />
+    <link rel="stylesheet" type="text/css" href="/asset/css/style.css" rel="preload" as="style" />
     <script src="/asset/js/jquery-3.4.1.min.js"></script>
+    <script src="/asset/js/jquery/common.js"></script>
   </head>
 
   <body>
-    jQuery로 만들기
+    <div class="body_wrap">
+      <div id="bg"></div>
+      <div id="weather"></div>
+      <div class="reset_area">
+        <button type="button" class="btn_reset" id="reset_name">
+          이름 초기화
+        </button>
+        <button type="button" class="btn_reset" id="reset_todo">
+          할 일 초기화
+        </button>
+        <button type="button" class="btn_reset" id="reset_weather">
+          날씨 초기화
+        </button>
+      </div>
+      <div id="greeting">
+        <h1 id="greeting_message">안녕하세요, <strong>누구누구</strong>님!</h1>
+        <div>
+          <input type="text" id="greeting_text" placeholder="이름을 입력하세요." />
+        </div>
+      </div>
+
+      <div class="todoList">
+        <div>
+          <ul id="todo"></ul>
+          <ul id="todoComplete"></ul>
+        </div>
+        <input type="text" id="todo_text" placeholder="할 일을 적어주세요." />
+      </div>
+    </div>
   </body>
 
 </html>
